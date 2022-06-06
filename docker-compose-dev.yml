@@ -1,0 +1,43 @@
+# docker-compose up -d
+# docker-compose -f .\docker-compose-dev.yml up -d
+# docker-compose -f .\docker-compose-dev.yml down
+# docker-compose down
+# docker push dineshaponso/fastapi
+# docker exec -it fastapi_api_1 bash
+# docker logs fast_api_1
+# docker ps
+# docker ps -a
+version: "3"
+services:
+    api:
+      build: .
+      depends_on:
+          - postgres
+      ports: 
+          - 8000:8000
+      volumes: 
+          - ./:/usr/scr/app:ro
+      command: bash -c "alembic upgrade head && uvicorn app.main_sqlalchemy:app --host 0.0.0.0 --port 8000 --reload"
+      # env_file:
+      #     - ./.env
+      environment:
+        - DATABASE_HOSTNAME=postgres
+        - DATABASE_PORT=5432
+        - DATABASE_NAME=fastapi
+        - DATABASE_USERNAME=postgres
+        - DATABASE_PASSWORD=EdgePower2005+
+        - SECRET_KEY=1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        - ALGORITHM=HS256
+        - ACCESS_TOKEN_EXPIRE_MIN=30
+  
+    postgres:
+      image: postgres
+      environment:
+        - POSTGRES_PASSWORD=EdgePower2005+
+        - POSTGRES_DB=fastapi
+
+      volumes:
+        - postgres-db:/var/lib/postgresql/data
+
+volumes:
+    postgres-db:

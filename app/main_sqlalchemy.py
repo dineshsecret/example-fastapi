@@ -1,25 +1,26 @@
 #swagger documentation url http://127.0.0.1:8000/docs
 #redoc documentation url http://127.0.0.1:8000/redoc
-
+#this is my text
 # from shutil import ExecError
 # from typing import Optional,List
 from fastapi import FastAPI #,Body, Depends,Response,status,HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+
 # from random import randrange
 # import psycopg2 
 # from psycopg2.extras import RealDictCursor
 # import time
 # from requests import Session
-from . import models
-from .database import engine
+#from . import models
+#from .database import engine
 
 # from . import utils
-
-from .routers import post,user,auth,vote
+from .routers import post,user,auth,vote,welcome
+#from  .routers import post,user,auth,vote
 
 from .config import settings
-  
-#models.Base.metadata.create_all(bind=engine) # cation from this line would replace by alembic
+import uvicorn
+#models.Base.metadata.create_all(bind=engine) # this line would replace by alembic
 
 app = FastAPI()
 origins = ["https://www.google.com","https://www.youtube.com"]
@@ -32,10 +33,14 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+app.include_router(welcome.router)
 app.include_router(post.router)
 app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(vote.router)
+
+if __name__ == '__main__':
+    uvicorn.run(app,host='0.0.0.0',port=8000)
 # while True:
 #     try:
 

@@ -1,7 +1,7 @@
 #swagger documentation url http://127.0.0.1:8000/docs
 #redoc documentation url http://127.0.0.1:8000/redoc
-from re import I, X
-from shutil import ExecError
+
+import uvicorn
 from typing import Optional
 from fastapi import Body, FastAPI,Response,status,HTTPException
 from pydantic import BaseModel
@@ -68,7 +68,7 @@ async def create_posts(new_post:Post):
     post_dict = new_post.dict()
     X=+1
     print(X)
-    post_dict['id']=X #randrange(0,1000000)
+    post_dict['id']=randrange(0,1000000)
 
     my_posts.append(post_dict)
     return {"data":post_dict}
@@ -86,7 +86,7 @@ async def get_post(id:int,response: Response):
     #post = cursor.fetchone()
     # print (test_post)
     #post = find_post(id)
-    post = [p for p in my_posts if p['id']==id]
+    post = [p for p in my_posts if p['id']==(id)]
     if not post:
         raise HTTPException(status_code= status.HTTP_404_NOT_FOUND,
          detail= f"post with id: {id} was not found")
@@ -127,3 +127,6 @@ async def update_post(id:int,post:Post):
     # post_dict['id'] = id
     # my_posts[index] = post_dict
     return {"data":updated_post}
+
+if __name__ == '__main__':
+    uvicorn.run(app,host='0.0.0.0',port=8000)
