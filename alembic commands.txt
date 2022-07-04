@@ -1,0 +1,19 @@
+initialize alembic folder
+ - alembic init alembic
+
+create a revision file. we add scrpts to the rivision file 
+ - alembic revision -m "create post table"
+see current revision
+ - alembic current
+
+upgrade to upto a revision using a revision number
+ - alembic upgrade <revision number>
+
+rollback the changes
+ - alembic dowgrade <revision number> or -1 (go back to one revision earlier)
+
+see history of the revisions
+ - alembic history
+
+upgrade to the latest
+ - alembic upgrade head

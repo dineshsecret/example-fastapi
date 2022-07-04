@@ -18,8 +18,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from .routers import post,user,auth,vote,welcome
 #from  .routers import post,user,auth,vote
 
-from .config import settings
-import uvicorn
+# from .config import settings
+# import uvicorn
 #models.Base.metadata.create_all(bind=engine) # this line would replace by alembic
 
 app = FastAPI()
@@ -39,8 +39,9 @@ app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(vote.router)
 
-if __name__ == '__main__':
-    uvicorn.run(app,host='0.0.0.0',port=8000)
+# if __name__ == '__main__':
+#     uvicorn.run(app,host='0.0.0.0',port=8000)
+
 # while True:
 #     try:
 
@@ -67,9 +68,9 @@ if __name__ == '__main__':
 #         if p['id'] == id:
 #             return i
 
-# @app.get("/")
-# async def welcome():
-#     return {"message": "Wel come to my API"}
+@app.get("/")
+async def welcome():
+    return {"message": "Welcome to my API"}
 
 
 # @app.get("/posts",response_model=List[schemas.Post])
